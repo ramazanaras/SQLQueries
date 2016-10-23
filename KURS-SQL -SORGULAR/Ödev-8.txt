@@ -1,0 +1,59 @@
+1)Çalýþanlarýn adýný ve soyadýný görüntüleyebilecek sorgu yazýnýz.
+
+2)Çalýþanýn adýný ve soyadýný bir kolonda yaþýný ise diðer kolonda gösteriniz.
+
+3)Ürün Adý, Depodaki stok maliyeti, stoktaki ürünlerin toplam % 10 KDV’si
+
+4)Fiyatý 10 dolarýn üzerinde olan ürünleri gösteriniz.
+
+5)Memleketi Londra olan çalýþanlarý gösteriniz.
+
+6)ALFKI müþterisine ait sipariþleri görüntüleyiniz.
+
+7)Kategori Id’si 5 olan ürünleri görüntüleyiniz.
+
+8)Kadýn olan çalýþanlarýmý görüntüleyiniz.
+
+9)1997 yýlýna ait satýþlarýmý gösteriniz.
+
+10)Birim fiyatý 30 ile 90 dolar arasýnda olan ürünlerimi gösteriniz.
+
+11)1997 yýlýnýn 6 ayýnda londra ya yaptýðým satýlarý listeleyiniz.
+
+12)10578 numaralý sipariþte satýlan ürünlerin toplam fiyatlarýný ve ürün id lerini ekranda yazdýrýnýz.
+
+13)1997 ocak ayýna ait londraya ve fransaya yaptýðýmýz satýþlarý görüntüleyiniz.
+
+14)1998 yýlýnda gönderilmeyen sipariþlerimi görüntüleyiniz.
+
+15)Kategori id=2 olan ve stoklarda 15 ten çok olan ürünleri gösteriniz.
+
+16)Amerika’da yaþamayan ve resmi olan çalýþanlarý gösteriniz.
+
+17)2 numaralý nakliyecinin taþýdýðý nakliye fiyatý aralýðý 10 ile 100 dolar arasýnda olan satýþlarý görüntüleyiniz.
+
+18)Sipariþleri müþteri id’lerine göre sýralayýnýz.
+
+19)Tedarikçilerimizi þirket ismi sýrasýna göre sýralayýnýz.
+
+20)1 numaralý kategorideki ürünlerin fiyatlarýný büyükten küçüðe göre sýralayýnýz.
+
+21)1996 yýlýnýn 12 ayýnda yapýlan sipariþlerin nakliye ücretlerinden en pahalý 3 tanesini gösteriniz.
+
+22)Stoðumdaki en pahalý 5 ürünü ekranda yazdýrýnýz.
+
+23)2 numaralý çalýþanýn yaptýðý satýþlardan 1998 yýlýnda gönderilen sipariþlerin en ucuz 3 nakliye ücretini görüntüleyiniz.
+
+24)1973’ten önce doðmuþ olan 3 Amerikalý olmayan çalýþaný görüntüleyiniz.
+
+25)Nakliye ücreti 30 ile 60 arasýnda olan sipariþleri gösteriniz.
+
+26)Müþteri id si CACTU ile DUMON harfleri arasýnda olan müþterilerin bilgilerini görüntüleyiniz.
+
+27)01.01.1997 tarihi ile 30.07.1997 tarihleri arasýndaki sipariþleri görüntüleyiniz.
+
+28)Fotoðrafý NULL olmayan ve IDsi 3 ile 8 arasýnda olan çalýþanlarý görüntüleyiniz.
+
+29)Müþterilerimizden ilk üç karakterini bilmediðimiz ama 4. ve 5. karakterleri ON olan müþterileri görüntüleyiniz.
+
+30Müþteri IDsinde ilk harfi A olan ve ikinci harfi N olmayan müþterileri görüntüleyiniz.

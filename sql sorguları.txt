@@ -1,0 +1,307 @@
+--adý Azade olan ve soyadý Çerkezoðlu olan kayýt
+select *from personel  where ad='Azade' and soyad='Çerkezoðlu'
+
+--tüm personelleri getir
+select *from personel  
+
+--ad,soyad,maas getir.
+select  ad,soyad,maas from personel  
+
+--sutun baþlýklarýný deðiþtirdik(a,s olarak)
+select  ad AS a,soyad AS s ,maas  from personel  
+
+--ada göre sýralama yapar(default olarak asc dir.)
+select *  from personel  order by ad  
+
+--ada göre büyükten küçüðe doðru sýralar
+select *  from personel  order by ad desc
+
+--ada göre ters soyada göre ters ve maaþa göre düz sýralar
+select  ad,soyad,maas from personel  order by ad desc,soyad desc,maas
+
+--doðum alanýnýn görüntülemesek bile sýralamada kullanabiliriz
+select  ad,soyad,maas from personel  order by dogum
+
+--adý mehmet olanlarý getir(metin deðerleri týrnak içerisinde yazýlýr.)
+select  *from personel where ad='Mehmet'  
+
+--adý mehmet soyadý ozman olan kayýt
+select  *from personel where ad='Mehmet'  and soyad='Ozman'
+
+--adý mehmet veya adý dilek olan kayýtlar
+select  *from personel where ad='Mehmet'  or ad='Dilek'
+
+--adý mehmet veya soyadý çerkezoðlu olan kayýtlar
+select  *from personel where ad='Mehmet'  or  soyad='Çerkezoðlu'
+
+--adý mehmet veya dilek olan ve maas ý 1400 den fazla olan kayýtlar
+select  *from personel where (ad='Mehmet'  or  ad='Dilek') and maas>1400
+
+--adý A ile baþlayan kayýtlar
+select  *from personel where ad like 'A*'
+
+--soyadý -oðlu ile biten kayýtlar
+select  *from personel where soyad like '*oðlu'
+
+--isminde h harfi bulunan kayýtlarý getir
+select  *from personel where ad like '*h*'
+
+--1 kasým 1978de doðanlarýn kayýtlarý
+select  ad,soyad,dogum from personel where dogum=#11/01/1978#
+
+--maaþý 1000 ile 2000 arasýnda olanlarý getirdik ve küçükten büyüðe doðru sýraladýk
+select  id,ad,soyad,maas from personel where maas>=1000 and maas<=2000 order by maas 
+
+--between ilede yapýlabilir
+select  id,ad,soyad,maas from personel where maas between 1000 and 2000 order by maas
+
+--1978 yýlýnda doðmuþ bütün çalýþanlar
+select ad,soyad,dogum from personel where dogum between #01/01/1978# and #12/31/1978#
+
+--bu tarihten doguma kadar kaç gün yaþadým
+select id,ad,soyad,#12/21/2012#-dogum as gunfarki from personel
+
+--ad,soyad ve gelsin
+select *from personel where ad='Mehmet' or ad='Dilek' or ad='Cengiz' order by ad,soyad
+veya bu þekilde(in ile yapýlýr)
+select *from personel where ad in('Mehmet','Dilek','Cengiz') order by ad,soyad
+
+--þirkette kaç kiþi çalýþýyor
+select count(*) as toplam from personel
+
+Not:group by dan sonra yazdýðýmýzý fromdan önceki yerede yazmamýz gerekiyor.
+--her bir departmanda toplam kaç kiþi çalýþýyor
+select departman_id,count(*) as toplam 
+from personel
+group by departman_id 
+
+--çalýþanlarýn kaçý türk kaçý ingiliz
+select ulke_id,count(*) as toplam from personel 
+group by ulke_id
+
+
+
+--adý mehmet olanlarýn maaþlarýný topladýk
+select sum(maas) as toplam from personel where ad='Mehmet'
+
+--muhasebe departmanýna bu ay toplam kaç tl maaþ ödemesi yapýlacak
+select sum(maas) as toplam from personel
+where departman_id=1
+
+--her bir departmana toplam kaç tl maaþ ödeyeceðiz
+select departman_id,sum(maas) as toplam 
+from personel
+group by departman_id
+
+--her bir departmana ortalama kaç ytl maaþ ödeyeceðiz.
+select departman_id,avg(maas) as toplam 
+from personel
+group by departman_id
+
+--yuvarlayabiliriz(round ile)
+select departman_id,round(avg(maas)) as toplam 
+from personel
+group by departman_id
+
+--þirkette en yüksek maaþý alan kiþi kaç ytl alýyor
+select max(maas) as maksimum from personel
+
+--en düþük maaþ alan kiþinin maaþý
+select min(maas) as maksimum from personel
+
+--en yüksek maaþ  ile en düþük arasýndaki fark
+select max(maas)-min(maas) as fark from personel
+
+--maaaþ farklarý
+select max(maas)-min(maas) as fark from personel
+
+--önümüzdeki ay elemanlara kaç ytl maaþ vermem gerekecek
+select sum(maas) as toplam from personel
+
+--þirkete ilk sipariþi veren müþteri(ilk kayýt)
+select first(musteri_id) as musteri from siparis_baslik;
+
+--þirketimize ilk sipariþi veren müþterinin özlük bilgileri(iç içe sorgu)
+select * from musteri where id=(select first(musteri_id)  from siparis_baslik)
+
+--þirketimize son sipariþi veren müþterinin özlük bilgileri(iç içe sorgu)
+select * from musteri where id=(select last(musteri_id)  from siparis_baslik)
+
+--en yüksek maaþý alan kiþinin özlük bilgileri
+select *from personel  where maas=(select max(maas) from personel)
+
+--en az bir sipariþ vermiþ müþterilerin idlerinin listesini getir
+select  distinct musteri_id from siparis_baslik
+
+--þimdiye kadar en az bir sipariþ vermiþ olan müþterilerimizin özlük bilgilerini istiyorum
+select  *from musteri where id in(select distinct musteri_id from siparis_baslik)
+
+--alternatif yol(exists)
+select  *from musteri where exists( select *from siparis_baslik where musteri_id=musteri.id)
+
+--bügüne kadar hiç sipariþ vermemiþ müþterilere ait özlük bilgileri
+select  *from musteri where not exists( select *from siparis_baslik where musteri_id=musteri.id)
+
+
+--þirketimizde çalýþan bütün personelin ve bütün müþterilerimizin ad soyad eposta ve doðum günü bilgilerini tek bir liste içinde görmek istiyoruz
+(select  ad,soyad,email,dogum from personel)
+union
+(select ad,soyad,email,dogum from musteri)
+not:birleþtirilecek sorgular arasýndaki alanlarý isimleri birebir eþleþmek zorunda.birinde email diðerinde eposta diye bir alan olsaydý hata verirdi.as komutu ile halledebiliriz
+
+--kim personel kim müþteri anlamak için
+(select  'Bizim eleman' as konum, ad,soyad,email,dogum from personel)
+union
+(select 'Musteri' as konum, ad,soyad,email,dogum from musteri)
+
+////ÝNNER JOÝN/////
+inner join:farklý tablolarýn farklý alanlarýný biraraya getirmek için.
+--her bir personelin idsini ,adýný soyadýný bunun yanýsýra çalýþtýðý deparmanýn idsini ve adýný bir arada bir arada listeleyip getirin.
+select personel.id as personel_id,personel.ad as ad,personel.soyad as soyad,personel.departman_id as departman_id,departman.ad as departman 
+from personel
+inner join departman on  departman.id=personel.departman_id
+not:fromdan sonra personel tablosu yerine departmandan yazabiliriz yani yer deðiþimi olabilir
+select personel.id as personel_id,personel.ad as ad,personel.soyad as soyad,personel.departman_id as departman_id,departman.ad as departman 
+from departman
+inner join personel on  departman.id=personel.departman_id
+
+--her bir personeli adýný,soyadýný ve ülkesinin ismini listeleyin.Liste ülke adý,personel adý ve personel soyadýna göre sýralanmýþ olsun
+select personel.ad as ad,personel.soyad as soyad, ulke.ad as millet from personel 
+inner join ulke on personel.ulke_id=ulke.id
+order by ulke.ad,personel.ad,personel.soyad
+
+--içinde her bir ülkenin idsi,ismi ve o ülkeden gelen personelin sayýsý olsun
+select ulke.id as id,ulke.ad as ulke,count(personel.id) as toplam
+from ulke 
+inner join personel on ulke.id=personel.ulke_id
+group by ulke.id,ulke.ad
+not:count gördüðümüz hemen hemen her yerde group by komutu kullanýlýr
+not2:fromdan önce yazdýðýmýz alanlar group by dada yazýlmalý.yada groupbyda yazýlan alanlar fromdan öncede yazýlmalý
+
+--listedeki ülkeler nüfus sayýsýna göre büyükten küçüðe doðru sýralanmýþ olsun.
+select ulke.id as id,ulke.ad as ulke,count(personel.id)  as toplam
+from ulke 
+inner join personel on ulke.id=personel.ulke_id
+group by ulke.id,ulke.ad
+order by count(personel.id)  desc
+
+--her bir departmanýn idsini,adýný ve o departmana ödenen toplam maaþý tek bir liste içinde görmek istiyorum
+select departman.id as id,departman.ad as ad ,sum(personel.maas) as toplam from personel 
+inner join departman on departman.id=personel.departman_id 
+group by departman.id,departman.ad
+not1:sum ve count gördün mü genelde group by yap.
+not2:Pratikte count,sum gibi matematiksel komutlar söz konusu olduðunda sayýlan alan haricindeki bütün alanlarý group by listesine dahil etmemiz gerekecektir.
+--maaþ toplamýna göre artan olarak sýraladýk
+select departman.id as id,departman.ad as ad ,sum(personel.maas) as toplam from personel 
+inner join departman on departman.id=personel.departman_id 
+group by departman.id,departman.ad
+order by sum(personel.maas)            (birþey yazmayýnca asc oluyor.)
+
+--personel ödenen maaþlarý ülke bazýnda toplayýp listelemenizi istiyorum.çýktýlar ülke ismine göre sýralanmýþ olsun
+select ulke.id as id,ulke.ad as millet,sum(personel.maas) as toplam 
+from personel
+inner join ulke on ulke.id=personel.ulke_id
+group by ulke.id,ulke.ad
+order by ulke.ad
+
+--aylýk maaþý 2000den fazla olan personellerin maaþlarýný ülke bazýnda toplayýp listlemenizi istiyorum.Çýktýlar ülke isimine göre sýralanmýþ olsun
+select ulke.id as id,ulke.ad as millet,sum(personel.maas) as toplam 
+from personel 
+inner join ulke on ulke.id=personel.ulke_id
+where personel.maas>2000
+group by ulke.id,ulke.ad
+order by ulke.ad
+not:sum(veya benzeri bir matematik komutu ) gördüðümüz hemen her yerde group by kullanýyoruz.
+
+--departmanlara ödenecek toplam maaþlarý departman idsi ve adý bazýnda listelemenizi istiyorum.ancak bu listede sadece toplam 
+ödenecek maaþ tutarý 10000 in üzerinde olan departmanlar yer alsýn
+select departman.id as id,departman.ad as departman,sum(personel.maas)  as toplam
+from personel 
+inner join departman on departman.id=personel.departman_id
+group by departman.id,departman.ad
+HAVING  sum(personel.maas) > 10000
+
+not:where komutu hazýr tablo alanlarý üzerinde filtreleme yapmak için kullanýlýrken;
+having komutu ,sorgu içerisinde üreitlen sütunlar üzerinde filtreleme yapmak için kullanýlýr
+not2:having komutu group by dan sonra yazýlýr.group bydan önce yazýnca hata veriyor.
+
+
+--web sitemizdeki içeriðe ait açýklamalarý ve ingilizce metinleri listelermisin.
+select webicerik_tanim.aciklama as açýklama ,webicerik_metin.metin as metin from webicerik_tanim 
+inner join webicerik_metin on webicerik_tanim.id=webicerik_metin.tanim_id
+where webicerik_metin.ulke_id='UK'
+
+not://ÝNNER JOÝNÝN KISA YAZILIÞI
+select webicerik_tanim.aciklama as açýklama ,webicerik_metin.metin as metin
+ from 
+webicerik_tanim,
+webicerik_metin 
+where 
+webicerik_tanim.id=webicerik_metin.tanim_id and
+webicerik_metin.ulke_id='UK'
+
+--her bir departmanýn idsini,adýný ve o departmana ödenen en yüksek maaþý bir liste halinde getirin
+select departman.id as id,departman.ad as ad,max(personel.maas) as maas
+from departman,personel
+where departman.id=personel.departman_id
+group by departman.id,departman.ad
+ üstteki kýsa hali
+veya 
+bu uzun hali
+select departman.id as id,departman.ad as ad,max(personel.maas) as maas
+from departman
+inner join personel on  departman.id=personel.departman_id
+group by departman.id,departman.ad
+
+
+--her müþterinin idsi adýný  ve soyadýný ve bugüne kadar verdiði sipariþ sayýsýný içeren bir liste gerekiyor
+select musteri.id ,musteri.ad,musteri.soyad,count(siparis_baslik.id) as toplam
+from musteri
+inner join siparis_baslik on musteri.id=siparis_baslik.musteri_id
+group by musteri.id,musteri.ad,musteri.soyad
+
+--sattýðýmýz ürünlerin idlerini,isimlerini ve þimdiye kadar kaç adet sipariþ edilmiþ olduðu bilgisini getirin
+select urun.id as id,urun.ad as ad, sum(siparis_kalem.adet) as toplam 
+from siparis_kalem 
+inner join urun on urun.id=siparis_kalem.urun_id
+group by urun.id,urun.ad
+not:siparis_kalem tablosu  her bir sipariþte hangi üründen kaç adet sipariþ edildiði bilgisini tutuyor.
+
+--memnun deðilim ve hiç memnun deðilim cevaplarýný veren müþterileri bilgileri?
+select musteri.id,musteri.ad,musteri.soyad,musteri.email
+from anket_mcevap,musteri
+where 
+anket_mcevap.musteri_id=musteri.id and 
+anket_mcevap.cevap_id in(4,5)
+
+
+--bana sistemdeki her bir ülkenin idsini ,adýný ve o ülkeden verilmiþ sipariþ sayýsýnýn içerecek bir liste gerekiyor
+select ulke.id as id,ulke.ad as ulke,count(siparis_baslik.id) as toplam
+from ulke,musteri,siparis_baslik
+where 
+ulke.id=musteri.ulke_id and
+musteri.id=siparis_baslik.musteri_id
+group by ulke.id,ulke.ad
+
+--anketlere ait her bir sorunun idsini,soru metnini,,potansiyel cevaplarý ve söz konusu cevabýn kaç kez verilmiþ olduðu bilgisi?
+select anket_soru.id as soru_id,anket_soru.soru as soru,anket_cevap.cevap as cevap,count(anket_mcevap.id) as toplam
+from anket_soru,anket_cevap,anket_mcevap
+where 
+anket_soru.id=anket_cevap.soru_id and
+anket_cevap.id=anket_mcevap.cevap_id
+group by anket_soru.id,anket_soru.soru,anket_cevap.cevap
+
+--left outer join
+select personel.id as personel_id,personel.ad as ad,personel.soyad as soyad,personel.departman_id as departman_id,departman.ad as departman
+from personel
+left outer join departman on departman.id=personel.departman_id
+
+personel de bulunup ikinci tabloda (departman) karþýlýðý olmayan kayýtlarýda listele demiþ olduk.
+
+--left outer join
+select ulke.ad as millet,personel.ad as ad,personel.soyad as soyad
+from personel
+left outer join ulke on ulke.id=personel.ulke_id
+order by ulke.ad,personel.ad,personel.soyad
+
+personelde olup ülke tablosunda karþýðý olmayan kayýtlarda geldi.
